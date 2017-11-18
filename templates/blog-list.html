@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Blogs</title>
+    <style>
+        .blog {
+            padding: 20px 0px;
+        }
+        .blog .info span {
+            padding-right: 10px;
+        }
+        .blog .summary {
+            padding-top: 20px;
+        }
+
+         .top_ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .top_li {
+            float: left;
+        }
+
+        .top_li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .top_li a:hover:not(.active) {
+            background-color: #111;
+        }
+
+        .active {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+<ul class="top_ul">
+    <li class="top_li"><a href=#login">登录</a></li>
+    <li class="top_li"><a href=#detail">主页</a></li>
+    <li class="top_li"><a href=#about>关于</a></li>
+</ul>
+
+<div class="header">
+    <h1>My Blogs</h1>
+</div>
+
+{% for blog in blogs %}
+    <div class="blog">
+        <div class="title">
+            <a href="#"><h2>{{ blog.title }}</h2></a>
+        </div>
+        <div class="info">
+            <span class="category" style="color: #ff9900;">{{ blog.category.name }}</span>
+            <span class="author" style="color: #4a86e8">{{ blog.author }}</span>
+            <span class="created" style="color: #6aa84f">{{ blog.created|date:"Y-m-d H:i" }}</span>
+        </div>
+        <div class="summary">
+            {{ blog.content|truncatewords:100 }}
+        </div>
+    </div>
+{% endfor %}
+
+</body>
+</html>

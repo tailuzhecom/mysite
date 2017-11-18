@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ blog.title }}</title>
+    <style>
+        .blog {
+            padding: 20px 0px;
+        }
+        .blog .info span {
+            padding-right: 10px;
+        }
+        .blog .summary {
+            padding-top: 20px;
+        }
+        body {margin:0;}
+
+        .top_ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .top_li {
+            float: left;
+        }
+
+        .top_li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .top_li a:hover:not(.active) {
+            background-color: #111;
+        }
+
+        .active {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<div class="header">
+    <span><a href="{% url 'blog_get_detail' blog.id %}">博客</a> - <a href="{% url 'blog_get_detail' blog.id %}">{{ blog.title }}</a></span>
+</div>
+
+<ul class="top_ul">
+    <li class="top_li"><a href="{% url 'blog_login' %}">登录</a></li>
+    <li class="top_li"><a href="{% url 'blog_list' %}">主页</a></li>
+    <li class="top_li"><a href=#about>关于</a></li>
+</ul>
+
+<div class="content">
+
+    <div class="blog">
+        <div class="title">
+            <a href="#"><h2>{{ blog.title }}</h2></a>
+        </div>
+        <div class="info">
+            <span class="category" style="color: #ff9900;">{{ blog.category.name }}</span>
+            <span class="author" style="color: #4a86e8">{{ blog.author }}</span>
+            <span class="created" style="color: #6aa84f">{{ blog.created|date:"Y-m-d H:i" }}</span>
+        </div>
+        <div class="summary">
+            {{ blog.content }}
+        </div>
+    </div>
+
+    <div class="comment">
+        <div class="comments-display" style="padding-top: 20px;">
+            <h3>评论</h3>
+            {% for comment in comments %}
+                <div class="comment-field" style="padding-top: 10px;">
+                    {{ comment.name }} 说: {{ comment.content }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="comment-post" style="padding-top: 20px;">
+            <h3>提交评论</h3>
+            <form action="{% url 'blog_get_detail' blog.id %}" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="input-field" style="padding-top: 10px">
+                        {{ field.label }}: {{ field }}
+                    </div>
+                    <div class="error" style="color: red;">
+                        {{ field.errors }}
+                    </div>
+                {% endfor %}
+                <button type="submit" style="margin-top: 10px">提交</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<br><br>
+<button onclick="document.getElementById('demo').innerHTML=Date()">现在的时间是？</button>
+
+<p id="demo"></p>
+<br>
+<br>
+<div id="footer-bottom">
+    <footer>
+        <ul><p>Copyright 2016 - 2017 design by <a href="/">tailuzhecom</a></p></ul>
+    </footer>
+</div>
+
+</body>
+</html>
